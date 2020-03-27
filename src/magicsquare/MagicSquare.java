@@ -11,8 +11,6 @@ public class MagicSquare {
     private int[][] matrix;
     private final int size;
     private final int magicConst;
-    private int x;
-    private int y;
 
     public MagicSquare(int n) {
         if (n < 1) {
@@ -87,17 +85,19 @@ public class MagicSquare {
 
     private int[][] odd(int n) {
         int[][] tempMatrix = new int[n][n];
-        x = 0;
-        y = (n - 1) / 2;     //середина верхней строчки
+        int x = 0;
+        int y = (n - 1) / 2;     //середина верхней строчки
         int maxNumber = n * n;
         for (int i = 1; i <= maxNumber; i++) {
             tempMatrix[x][y] = i;
-            nextStep(tempMatrix, n);
+            int[] newXY = nextStep(tempMatrix, n, x, y);
+            x = newXY[0];
+            y = newXY[1];
         }
         return tempMatrix;
     }
 
-    private void nextStep(int[][] tempMatrix, int n) {
+    private int[] nextStep(int[][] tempMatrix, int n, int x, int y) {
         int newX = x - 1;
         int newY = y + 1;   //вверх и вправо
         if (newX < 0) {
@@ -112,6 +112,7 @@ public class MagicSquare {
             x = newX;
             y = newY;
         }
+        return new int[]{x, y};
     }
 
     private void even() {
